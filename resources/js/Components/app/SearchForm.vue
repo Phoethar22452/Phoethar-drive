@@ -8,6 +8,7 @@
         />
     </form>
 </template>
+
 <script setup>
 // Imports
 import TextInput from '@/Components/TextInput.vue';
