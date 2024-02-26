@@ -23,7 +23,7 @@ class StoreFolderRequest extends ParentIdBaseRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    { 
         return array_merge(parent::rules(), [
             'name' => [
                 'required',
