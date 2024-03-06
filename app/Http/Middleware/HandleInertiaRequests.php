@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\File;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -29,11 +30,20 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $file = File::where('created_by', $user->id)
+                    ->where('is_folder', 1)
+                    ->whereNull('deleted_at')
+                    ->whereNull('parent_id')
+                    ->first();
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
+            'folder' => [
+                'id' => $file->id,
+            ]
         ];
     }
 }
