@@ -31,19 +31,21 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
-        $file = File::where('created_by', $user->id)
-                    ->where('is_folder', 1)
-                    ->whereNull('deleted_at')
-                    ->whereNull('parent_id')
-                    ->first();
+        // if ($user) {
+        //     $file = File::where('created_by', $user->id)
+        //                 ->where('is_folder', 1)
+        //                 ->whereNull('deleted_at')
+        //                 ->whereNull('parent_id')
+        //                 ->first();
+        // }
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $user,
             ],
-            'folder' => [
-                'id' => $file->id,
-            ]
+            // 'folder' => [
+            //     'id' => !empty($file) ? $file->id : null,
+            // ]
         ];
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Query\Builder;
 //use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class ParentIdBaseRequest extends FormRequest
@@ -16,7 +17,7 @@ class ParentIdBaseRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {  
+    {   
         $this->parent = File::query()
                             ->where('id', $this->input('parent_id'))
                             ->first();
@@ -33,7 +34,7 @@ class ParentIdBaseRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    { 
         return [
             'parent_id' => [
                 Rule::exists(File::class, 'id')
