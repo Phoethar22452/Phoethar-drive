@@ -84,7 +84,7 @@ import { HomeIcon } from '@heroicons/vue/24/solid'
 const { files } = defineProps({
     files: Object,
     folder: Object,
-    ancestors: Array
+    ancestors: Object
 });
 
 // Computed
