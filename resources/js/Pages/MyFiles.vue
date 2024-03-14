@@ -27,54 +27,59 @@
                 </li>
             </ol>
         </nav>
-        <table class="min-w-full">
-            <thead class="bg-gray-100 border-b">
-                <tr>
-                    <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                        Name
-                    </th>
-                    <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                        Owner
-                    </th>
-                    <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                        Last Modified
-                    </th>
-                    <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                        Size
-                    </th>
-                </tr>
-            </thead>
-            <tbody v-if="files.data.length">
-                <tr v-for="file of files.data" 
-                    @dblclick="openFolder(file)"
-                    :key="file.id" 
-                    class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 cursor-pointer">
-                    <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{file.name}}
-                    </td>
-                    <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{file.owner}}
-                    </td>
-                    <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{file.updated_at}}
-                    </td>
-                    <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{file.size}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="flex-1 overflow-auto">
+            <table class="min-w-full">
+                        <thead class="bg-gray-100 border-b">
+                            <tr>
+                                <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Name
+                            </th>
+                            <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Owner
+                            </th>
+                            <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Last Modified
+                            </th>
+                            <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Size
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="files.data.length">
+                        <tr v-for="file of files.data" 
+                        @dblclick="openFolder(file)"
+                        :key="file.id" 
+                        class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 cursor-pointer">
+                        <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
+                            <FileIcon :file="file"/>
+                            {{file.name}}
+                        </td>
+                        <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{file.owner}}
+                        </td>
+                        <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{file.updated_at}}
+                        </td>
+                        <td class="px-6 py-4 white whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{file.size}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div v-if="!files.data.length" class="py-8 text-center text-lg text-gray-400">
             Their is no data in this folder
         </div>
     </AuthenticatedLayout>
 </template>
+
 <script setup>
 // Imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { HomeIcon } from '@heroicons/vue/24/solid'
+import FileIcon from "@/Components/app/FileIcon.vue";
 
 // Uses
 

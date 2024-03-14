@@ -40,6 +40,7 @@ class StoreFileRequest extends ParentIdBaseRequest
             'files.*' => [
                 'required',
                 'file',
+                'max:1024',
                 function ($attribute, $value, $fail) {
                     if (!$this->folder_name) {
                         /** @var $value \Illuminate\Http\UploadedFile */

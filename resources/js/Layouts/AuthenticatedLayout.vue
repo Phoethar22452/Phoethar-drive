@@ -15,12 +15,15 @@
                     <SearchForm />
                     <UserSettingsDropDown />
                 </div>
+                
                 <div class="flex-1 flex flex-col overflow-hidden">
                     <slot />
                 </div>
             </template>
         </main>
     </div>
+    <ErrorDialog />
+    <FormProgress :form="fileUploadForm"/>
 </template>
 
 <script setup>
@@ -28,9 +31,11 @@
 import Navigation from '@/Components/app/Navigation.vue';
 import SearchForm from '@/Components/app/SearchForm.vue';
 import UserSettingsDropDown from '@/Components/app/UserSettingsDropDown.vue';
-import { FILE_UPLOAD_STARTED, emitter } from '@/event-bus';
+import { FILE_UPLOAD_STARTED, emitter, showErrorDialog } from '@/event-bus';
 import { useForm, usePage } from '@inertiajs/vue3';
 import {handleError, onMounted, ref} from "vue";
+import FormProgress from "@/Components/app/FormProgress.vue";
+import ErrorDialog from "@/Components/ErrorDialog.vue";
 
 // Uses
 const page = usePage();
@@ -73,7 +78,26 @@ function uploadFiles(files) {
     fileUploadForm.files = files;
     fileUploadForm.relative_paths = [...files].map( file => file.webkitRelativePath);
 
-    fileUploadForm.post(route('file.store'));
+    fileUploadForm.post(route('file.store'),
+    {
+        onSuccess: () => {
+
+        },
+        onError: (errors) => {
+            let message = '';
+
+            if (Object.keys(errors).length > 0) {
+                message = errors[Object.keys(errors)[0]]
+            } else {
+                message = 'Error during file upload. Please try again later.'
+            }
+            showErrorDialog(message);
+        },
+        onFinish: () => {
+            fileUploadForm.clearErrors();
+            fileUploadForm.reset();
+        }
+    });
 }
 
 // Hooks
