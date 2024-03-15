@@ -56,7 +56,7 @@ const dragOver = ref(false);
 function handleDrop(event) {
     dragOver.value = false;
     const files = event.dataTransfer.files;
-    console.log(files);
+    //console.log(files);
 
     if (!files.length) {
         return;
