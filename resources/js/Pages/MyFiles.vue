@@ -1,5 +1,6 @@
 <template lang="">
     <AuthenticatedLayout>
+        <h1 class="text-green-300 font-bold">{{ message }}</h1>
         <nav class="flex items-center justify-between p-1 mb-3">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li v-for="ans of ancestors.data" :key="ans.id"
@@ -9,7 +10,7 @@
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
                         <HomeIcon class="w-4 h-4" />
 
-                        My Files
+                        My Files 
                     </Link>
                     <div v-else class="flex items-center">
                         <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
@@ -84,8 +85,12 @@ import { router, usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { HomeIcon } from '@heroicons/vue/24/solid'
 import FileIcon from "@/Components/app/FileIcon.vue";
-import { onMounted, onUpdated, ref } from 'vue';
+import { computed, onMounted, onUpdated, ref } from 'vue';
 import { httpGet } from '@/Helper/http-helper';
+
+let data = {
+    message: 'Hello Intertia and Vue js 3'
+};
 
 // Uses
 const page = usePage();
@@ -105,7 +110,9 @@ const allFiles = ref({
     next: props.files.links.next
 })
 // Computed
-
+const message = computed(() => {
+  return data.message.toUpperCase();
+});
 
 // Methods
 function openFolder(file) {
